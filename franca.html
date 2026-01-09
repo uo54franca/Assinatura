@@ -43,25 +43,23 @@ input[value="default"] + label {
     </style>
 </head>
 <body>
-    
+    <!--
  <div class="container">
     <div class="form-area">
         <h2>1. Escolha o Modelo</h2>
         <div class="type-selector">
             <label>Qual tipo de assinatura deseja?</label>
             <div class="radio-group">
-                <!--
                 <label>
                     <input type="radio" name="sigType" value="default" checked onchange="toggleSignatureType()"> Modelo Padrão
                 </label>
-                -->
                 <label>
                     <input type="radio" name="sigType" value="social" onchange="toggleSignatureType()"> Com Redes Sociais
                 </label>
             </div>
         </div>
-    
-        <h2>2. Preencha seus dados</h2>
+     -->
+        <h2>1. Preencha seus dados</h2>
         
         <label for="name">Nome Completo:</label>
         <input type="text" id="name" placeholder="Ex: Thomas Henrique" oninput="updateSignature()">
@@ -188,6 +186,7 @@ function copySignature() {
 
 </body>
 </html>
+
 
 
 
