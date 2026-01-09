@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Assinatura (Fixo Franca) - Sesc/Senac</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f4; padding: 20px; }
+        .container { max-width: 980px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); display: flex; gap: 40px; flex-wrap: wrap;}
+        .form-area { flex: 1; min-width: 320px; }
+        .preview-area { flex: 1.3; min-width: 400px; border-left: 1px solid #ddd; padding-left: 40px; }
+        
+        h2 { color: #333; margin-top: 0; font-size: 1.2rem; margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; font-size: 0.9rem; }
+        input[type="text"] { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        
+        /* Estilos para a seleção de tipo */
+        .type-selector { background: #eef6fc; padding: 15px; border-radius: 4px; margin-bottom: 20px; border: 1px solid #d0e3f0; }
+        .radio-group { display: flex; gap: 20px; margin-top: 10px; }
+        .radio-group label { font-weight: normal; cursor: pointer; display: flex; align-items: center; }
+        .radio-group input { margin-right: 8px; }
+
+        button { background-color: #004a80; color: white; border: none; padding: 12px 20px; border-radius: 4px; cursor: pointer; font-size: 16px; width: 100%; transition: background 0.3s; margin-top: 10px; }
+        button:hover { background-color: #003355; }
+        
+        .copy-success { color: green; margin-top: 10px; display: none; text-align: center; font-weight: bold; background: #dff0d8; padding: 10px; border-radius: 4px; }
+
+        .signature-container { margin-top: 20px; padding: 15px; border: 1px dashed #ccc; background: #fff; }
+        /* Esconde a segunda assinatura por padrão */
+        #signature-social { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="form-area">
+        <h2>1. Escolha o Modelo</h2>
+        <div class="type-selector">
+            <label>Qual tipo de assinatura deseja?</label>
+            <div class="radio-group">
+                <label>
+                    <input type="radio" name="sigType" value="default" checked onchange="toggleSignatureType()"> Modelo Padrão
+                </label>
+                <label>
+                    <input type="radio" name="sigType" value="social" onchange="toggleSignatureType()"> Com Redes Sociais
+                </label>
+            </div>
+        </div>
+
+        <h2>2. Preencha seus dados</h2>
+        
+        <label for="name">Nome Completo:</label>
+        <input type="text" id="name" placeholder="Ex: Thomas Henrique" oninput="updateSignature()">
+
+        <label for="sector">Setor | Unidade:</label>
+        <input type="text" id="sector" placeholder="Ex: NTI" oninput="updateSignature()">
+
+        <label for="phone">Telefone:</label>
+        <input type="text" id="phone" placeholder="Ex: +55 16 3112 7604" oninput="updateSignature()">
+
+        <label for="site">Site:</label>
+        <input type="text" id="site" value="sescsp.org.br" oninput="updateSignature()">
+
+        <button onclick="copySignature()">Copiar Assinatura</button>
+        <p class="copy-success" id="msgSuccess">Copiado! Agora cole nas configurações do seu e-mail.</p>
+    </div>
+
+    <div class="preview-area">
+        <h2>3. Visualização</h2>
+        <p style="color: #666; font-size: 0.9em;">A visualização muda conforme o modelo escolhido:</p>
+        
+        <div id="signature-default" class="signature-container">
+            <table border="0" cellpadding="0" cellspacing="0" style="font-family: Arial, Helvetica, sans-serif; color: #333333; line-height: 1.3;">
+                <tr>
+                    <td style="padding-right: 25px; vertical-align: middle;">
+                        <img src="https://raw.githubusercontent.com/lucianosouza995/Imagens/main/assinatura_email_80_anos_JPG.jpg" alt="Sesc Senac Fecomercio" width="200" style="display: block; border: 0; max-width: 200px; height: auto;">
+                    </td>
+                    <td style="border-left: 1px solid #333333; padding-left: 15px; vertical-align: middle;">
+                        <strong style="font-size: 14px; color: #000000;" class="sig-name">Thomas Henrique</strong><br>
+                        <span style="font-size: 13px; color: #333333;" class="sig-sector">NTI</span><br>
+                        <span style="font-size: 13px; color: #333333;">Tel.: <span class="sig-phone">+55 16 3112 7604</span></span><br>
+                        <a href="https://sescsp.org.br" class="sig-site-link" style="font-size: 13px; color: #000000; text-decoration: underline;">sescsp.org.br</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="signature-social" class="signature-container">
+            <table border="0" cellpadding="0" cellspacing="0" style="font-family: Arial, Helvetica, sans-serif; color: #333333; line-height: 1.3;">
+                <tr>
+                    <td style="padding-right: 25px; vertical-align: middle;">
+                        <img src="https://raw.githubusercontent.com/lucianosouza995/Imagens/main/assinatura_email_80_anos_JPG.jpg" alt="Sesc Senac Fecomercio" width="200" style="display: block; border: 0; max-width: 200px; height: auto;">
+                    </td>
+                    <td style="border-left: 1px solid #333333; padding-left: 15px; vertical-align: top; padding-top: 5px;">
+                        <strong style="font-size: 14px; color: #000000;" class="sig-name">Thomas Henrique</strong><br>
+                        <span style="font-size: 13px; color: #333333;" class="sig-sector">NTI</span><br>
+                        <span style="font-size: 13px; color: #333333;">Tel.: <span class="sig-phone">+55 16 3112 7604</span></span><br>
+                        <a href="https://sescsp.org.br" class="sig-site-link" style="font-size: 13px; color: #000000; text-decoration: underline;">sescsp.org.br</a><br>
+                        
+                        <div style="padding-top: 10px;">
+                            <a href="http://www.facebook.com/sescfrancasp" target="_blank" style="text-decoration: none; margin-right: 8px;">
+                                <img src="https://cdn-icons-png.flaticon.com/512/20/20673.png" width="22" height="22" alt="FB" style="border:0; display:inline-block;">
+                            </a>
+                            <a href="https://www.instagram.com/sescfranca/" target="_blank" style="text-decoration: none;">
+                                <img src="https://cdn-icons-png.flaticon.com/512/87/87390.png" width="22" height="22" alt="IG" style="border:0; display:inline-block;">
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        </div>
+</div>
+
+<script>
+    // Variável para controlar qual assinatura está ativa no momento
+    let activeSignatureId = 'signature-default';
+
+    // Função que alterna entre os modelos
+    function toggleSignatureType() {
+        const type = document.querySelector('input[name="sigType"]:checked').value;
+        const defaultPreview = document.getElementById('signature-default');
+        const socialPreview = document.getElementById('signature-social');
+
+        if (type === 'social') {
+            defaultPreview.style.display = 'none';
+            socialPreview.style.display = 'block';
+            activeSignatureId = 'signature-social';
+        } else {
+            defaultPreview.style.display = 'block';
+            socialPreview.style.display = 'none';
+            activeSignatureId = 'signature-default';
+        }
+        // Não é necessário chamar updateSignature() aqui pois não há campos extras para ler
+    }
+
+    // Função que atualiza os textos (nome, telefone, etc)
+    function updateSignature() {
+        // Pega os valores dos campos
+        const name = document.getElementById('name').value || 'Seu Nome Aqui';
+        const sector = document.getElementById('sector').value || 'Setor | Unidade';
+        const phone = document.getElementById('phone').value || '+55 00 00000000';
+        const site = document.getElementById('site').value || 'sescsp.org.br';
+
+        // Atualiza TODOS os elementos com as classes comuns nas duas assinaturas
+        document.querySelectorAll('.sig-name').forEach(el => el.innerText = name);
+        document.querySelectorAll('.sig-sector').forEach(el => el.innerText = sector);
+        document.querySelectorAll('.sig-phone').forEach(el => el.innerText = phone);
+        
+        document.querySelectorAll('.sig-site-link').forEach(el => {
+            el.innerText = site;
+            el.href = 'https://' + site.replace(/^https?:\/\//, '');
+        });
+
+        // NOTA: Os links de redes sociais não são atualizados aqui
+        // pois já estão fixos (hardcoded) no HTML acima.
+    }
+
+    // Função de copiar (copia apenas a assinatura que estiver visível)
+    function copySignature() {
+        const range = document.createRange();
+        const selection = window.getSelection();
+        // Seleciona apenas a div da assinatura ativa no momento
+        const element = document.getElementById(activeSignatureId);
+
+        selection.removeAllRanges();
+        range.selectNodeContents(element);
+        selection.addRange(range);
+
+        try {
+            document.execCommand('copy');
+            const msg = document.getElementById('msgSuccess');
+            msg.style.display = 'block';
+            setTimeout(() => msg.style.display = 'none', 4000);
+        } catch (err) {
+            alert('Erro ao copiar. Por favor, selecione a assinatura com o mouse e copie manualmente (Ctrl+C).');
+        }
+        
+        selection.removeAllRanges();
+    }
+</script>
+
+</body>
+</html>

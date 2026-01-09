@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Assinatura Padronizada</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f4; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); display: flex; gap: 40px; flex-wrap: wrap;}
+        .form-area { flex: 1; min-width: 300px; }
+        .preview-area { flex: 1.2; min-width: 350px; border-left: 1px solid #ddd; padding-left: 40px; }
+        
+        h2 { color: #333; margin-top: 0; font-size: 1.2rem; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; font-size: 0.9rem; }
+        input[type="text"] { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        
+        button { background-color: #004a80; color: white; border: none; padding: 12px 20px; border-radius: 4px; cursor: pointer; font-size: 16px; width: 100%; transition: background 0.3s; margin-top: 10px; }
+        button:hover { background-color: #003355; }
+        
+        .copy-success { color: green; margin-top: 10px; display: none; text-align: center; font-weight: bold; background: #dff0d8; padding: 10px; border-radius: 4px; }
+
+        #signature-render { margin-top: 20px; padding: 10px; border: 1px dashed #ccc; background: #fff; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="form-area">
+        <h2>1. Preencha seus dados</h2>
+        
+        <label for="name">Nome Completo:</label>
+        <input type="text" id="name" placeholder="Ex: Luciano Augusto de Souza" oninput="updateSignature()">
+
+        <label for="sector">Setor | Unidade:</label>
+        <input type="text" id="sector" placeholder="Ex: NTI | Sesc Rio Preto" oninput="updateSignature()">
+
+        <label for="phone">Telefone:</label>
+        <input type="text" id="phone" placeholder="Ex: +55 17 32169336" oninput="updateSignature()">
+
+        <label for="site">Site:</label>
+        <input type="text" id="site" value="sescsp.org.br" oninput="updateSignature()">
+
+        <button onclick="copySignature()">Copiar Assinatura</button>
+        <p class="copy-success" id="msgSuccess">Copiado com sucesso!</p>
+    </div>
+
+    <div class="preview-area">
+        <h2>2. Visualização</h2>
+        <p style="color: #666; font-size: 0.9em;">A logo já está configurada:</p>
+        
+        <div id="signature-render">
+            <table border="0" cellpadding="0" cellspacing="0" style="font-family: Arial, Helvetica, sans-serif; color: #333333; line-height: 1.4;">
+                <tr>
+                    <td style="padding-right: 15px; vertical-align: middle;">
+                        <img id="sig-image" src="" alt="Sesc Senac Fecomercio" width="160" style="display: block; border: 0; max-width: 160px; height: auto;">
+                    </td>
+                    
+                    <td style="border-left: 1px solid #333333; padding-left: 15px; vertical-align: middle;">
+                        <strong style="font-size: 14px; color: #333333;" id="sig-name">Luciano Augusto de Souza</strong><br>
+                        <span style="font-size: 13px; color: #444444;" id="sig-sector">NTI | Sesc Rio Preto</span><br>
+                        <span style="font-size: 13px; color: #444444;">Tel.: <span id="sig-phone" style="text-decoration: underline;">+55 17 32169336</span></span><br>
+                        <a href="https://sescsp.org.br" id="sig-site-link" style="font-size: 13px; color: #555555; text-decoration: underline;">sescsp.org.br</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        </div>
+</div>
+
+<script>
+    // ==========================================
+    // CONFIGURAÇÃO DA LOGO
+    // Seu link do GitHub já está correto aqui:
+    const LOGO_URL = "https://raw.githubusercontent.com/lucianosouza995/Imagens/main/assinatura_email_80_anos_JPG.jpg"; 
+    // ==========================================
+
+    // Inicializa a logo diretamente
+    document.getElementById('sig-image').src = LOGO_URL;
+    
+    // (Removi o bloco "if" que estava causando o problema)
+
+    function updateSignature() {
+        const name = document.getElementById('name').value || 'Seu Nome Aqui';
+        const sector = document.getElementById('sector').value || 'Setor | Unidade';
+        const phone = document.getElementById('phone').value || '+55 00 00000000';
+        const site = document.getElementById('site').value || 'sescsp.org.br';
+
+        document.getElementById('sig-name').innerText = name;
+        document.getElementById('sig-sector').innerText = sector;
+        document.getElementById('sig-phone').innerText = phone;
+        
+        const siteLink = document.getElementById('sig-site-link');
+        siteLink.innerText = site;
+        siteLink.href = 'https://' + site.replace(/^https?:\/\//, '');
+    }
+
+    function copySignature() {
+        const range = document.createRange();
+        const selection = window.getSelection();
+        const element = document.getElementById('signature-render');
+
+        selection.removeAllRanges();
+        range.selectNodeContents(element);
+        selection.addRange(range);
+
+        try {
+            document.execCommand('copy');
+            alert('Assinatura copiada com sucesso!'); 
+        } catch (err) {
+            alert('Erro ao copiar. Selecione manualmente.');
+        }
+        
+        selection.removeAllRanges();
+    }
+</script>
+
+</body>
+</html>
