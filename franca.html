@@ -42,38 +42,17 @@ input[value="default"] + label {
 
     @media (max-width: 600px) {
 
-    .preview-signature table,
-    .preview-signature tbody,
-    .preview-signature tr,
-    .preview-signature td {
-        display: block;
-        width: 100% !important;
-        text-align: center;
+    .preview-signature {
+        display: inline-block;
+        transform: scale(0.85);
+        transform-origin: top left;
     }
 
-    /* Remove a linha vertical */
-    .preview-signature td {
-        border: none !important;
-        padding: 10px 0 !important;
+    .preview-area {
+        overflow-x: auto;
     }
 
-    /* Ajusta logo */
-    .preview-signature img {
-        max-width: 200px;
-        margin: 0 auto;
-        display: block;
-    }
-
-    /* Espaçamento entre blocos */
-    .preview-signature tr {
-        margin-bottom: 10px;
-    }
-         .preview-signature {
-        transform: scale(0.8);
-        transform-origin: top center;
-        margin: 0 auto;
-    }
-
+}
 }
 
     </style>
@@ -224,6 +203,7 @@ function copySignature() {
 
 </body>
 </html>
+
 
 
 
