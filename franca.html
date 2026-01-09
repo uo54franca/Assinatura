@@ -55,9 +55,9 @@
         <label for="sector">Setor | Unidade:</label>
         <input type="text" id="sector" placeholder="Ex: NTI" oninput="updateSignature()">
 
-        <label for="phone">Telefone:</label>
-        <input type="text" id="phone" placeholder="Ex: +55 16 3112 7604" oninput="updateSignature()">
-
+        <label for="phoneEnd">Últimos 4 dígitos do telefone:</label>
+        <input type="text" id="phoneEnd" maxlength="4" placeholder="Ex: 7604"oninput="updateSignature()">
+        
         <button onclick="copySignature()">Copiar Assinatura</button>
         <p class="copy-success" id="msgSuccess">Copiado! Agora cole nas configurações do seu e-mail.</p>
     </div>
@@ -129,7 +129,12 @@ function toggleSignatureType() {
 function updateSignature() {
     const name = document.getElementById('name').value || 'Seu Nome Aqui';
     const sector = document.getElementById('sector').value || 'Setor | Unidade';
-    const phone = document.getElementById('phone').value || '+55 00 00000000';
+
+    // Últimos 4 dígitos digitados pelo usuário
+    const phoneEnd = document.getElementById('phoneEnd').value || '0000';
+
+    // Telefone fixo institucional
+    const fullPhone = `+55 16 3112-${phoneEnd}`;
 
     document.querySelectorAll('.sig-name').forEach(el => {
         el.innerText = name;
@@ -140,10 +145,10 @@ function updateSignature() {
     });
 
     document.querySelectorAll('.sig-phone').forEach(el => {
-        el.innerText = phone;
+        el.innerText = fullPhone;
     });
 }
-
+    
 function copySignature() {
     const element = document.getElementById(activeSignatureId);
     const range = document.createRange();
@@ -169,6 +174,7 @@ function copySignature() {
 
 </body>
 </html>
+
 
 
 
