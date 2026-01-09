@@ -58,9 +58,6 @@
         <label for="phone">Telefone:</label>
         <input type="text" id="phone" placeholder="Ex: +55 16 3112 7604" oninput="updateSignature()">
 
-        <label for="site">Site:</label>
-        <input type="text" id="site" value="sescsp.org.br" oninput="updateSignature()">
-
         <button onclick="copySignature()">Copiar Assinatura</button>
         <p class="copy-success" id="msgSuccess">Copiado! Agora cole nas configurações do seu e-mail.</p>
     </div>
@@ -79,7 +76,7 @@
                         <strong style="font-size: 14px; color: #000000;" class="sig-name">Thomas Henrique</strong><br>
                         <span style="font-size: 13px; color: #333333;" class="sig-sector">NTI</span><br>
                         <span style="font-size: 13px; color: #333333;">Tel.: <span class="sig-phone">+55 16 3112 7604</span></span><br>
-                        <a href="https://sescsp.org.br" class="sig-site-link" style="font-size: 13px; color: #000000; text-decoration: underline;">sescsp.org.br</a>
+                        <a href="https://sescsp.org.br/franca" class="sig-site-link" style="font-size: 13px; color: #000000; text-decoration: underline;">sescsp.org.br/franca</a>
                     </td>
                 </tr>
             </table>
@@ -113,73 +110,53 @@
 </div>
 
 <script>
-    // Variável para controlar qual assinatura está ativa no momento
-    let activeSignatureId = 'signature-default';
+let activeSignatureId = 'signature-default';
 
-    // Função que alterna entre os modelos
-    function toggleSignatureType() {
-        const type = document.querySelector('input[name="sigType"]:checked').value;
-        const defaultPreview = document.getElementById('signature-default');
-        const socialPreview = document.getElementById('signature-social');
+function toggleSignatureType() {
+    const type = document.querySelector('input[name="sigType"]:checked').value;
+    document.getElementById('signature-default').style.display =
+        type === 'default' ? 'block' : 'none';
+    document.getElementById('signature-social').style.display =
+        type === 'social' ? 'block' : 'none';
 
-        if (type === 'social') {
-            defaultPreview.style.display = 'none';
-            socialPreview.style.display = 'block';
-            activeSignatureId = 'signature-social';
-        } else {
-            defaultPreview.style.display = 'block';
-            socialPreview.style.display = 'none';
-            activeSignatureId = 'signature-default';
-        }
-        // Não é necessário chamar updateSignature() aqui pois não há campos extras para ler
+    activeSignatureId = type === 'social'
+        ? 'signature-social'
+        : 'signature-default';
+}
+
+function updateSignature() {
+    const name = document.getElementById('name').value || 'Seu Nome Aqui';
+    const sector = document.getElementById('sector').value || 'Setor | Unidade';
+    const phone = document.getElementById('phone').value || '+55 00 00000000';
+
+    document.querySelectorAll('.sig-name').forEachforEach(el => el.innerText = name);
+    document.querySelectorAll('.sig-sector').forEach(el => el.innerText = sector);
+    document.querySelectorAll('.sig-phone').forEach(el => el.innerText = phone);
+}
+
+function copySignature() {
+    const element = document.getElementById(activeSignatureId);
+    const range = document.createRange();
+    const selection = window.getSelection();
+
+    selection.removeAllRanges();
+    range.selectNodeContents(element);
+    selection.addRange(range);
+
+    try {
+        document.execCommand('copy');
+        const msg = document.getElementById('msgSuccess');
+        msg.style.display = 'block';
+        setTimeout(() => msg.style.display = 'none', 4000);
+    } catch {
+        alert('Erro ao copiar. Copie manualmente (Ctrl+C).');
     }
 
-    // Função que atualiza os textos (nome, telefone, etc)
-    function updateSignature() {
-        // Pega os valores dos campos
-        const name = document.getElementById('name').value || 'Seu Nome Aqui';
-        const sector = document.getElementById('sector').value || 'Setor | Unidade';
-        const phone = document.getElementById('phone').value || '+55 00 00000000';
-        const site = document.getElementById('site').value || 'sescsp.org.br';
-
-        // Atualiza TODOS os elementos com as classes comuns nas duas assinaturas
-        document.querySelectorAll('.sig-name').forEach(el => el.innerText = name);
-        document.querySelectorAll('.sig-sector').forEach(el => el.innerText = sector);
-        document.querySelectorAll('.sig-phone').forEach(el => el.innerText = phone);
-        
-        document.querySelectorAll('.sig-site-link').forEach(el => {
-            el.innerText = site;
-            el.href = 'https://' + site.replace(/^https?:\/\//, '');
-        });
-
-        // NOTA: Os links de redes sociais não são atualizados aqui
-        // pois já estão fixos (hardcoded) no HTML acima.
-    }
-
-    // Função de copiar (copia apenas a assinatura que estiver visível)
-    function copySignature() {
-        const range = document.createRange();
-        const selection = window.getSelection();
-        // Seleciona apenas a div da assinatura ativa no momento
-        const element = document.getElementById(activeSignatureId);
-
-        selection.removeAllRanges();
-        range.selectNodeContents(element);
-        selection.addRange(range);
-
-        try {
-            document.execCommand('copy');
-            const msg = document.getElementById('msgSuccess');
-            msg.style.display = 'block';
-            setTimeout(() => msg.style.display = 'none', 4000);
-        } catch (err) {
-            alert('Erro ao copiar. Por favor, selecione a assinatura com o mouse e copie manualmente (Ctrl+C).');
-        }
-        
-        selection.removeAllRanges();
-    }
+    selection.removeAllRanges();
+}
 </script>
 
 </body>
 </html>
+
 
