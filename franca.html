@@ -122,7 +122,7 @@ input[value="default"] + label {
 </div>
 
 <script>
-let activeSignatureId = 'signature-default';
+let activeSignatureId = 'signature-social'; // FIXADO COM REDES SOCIAIS
 
 function toggleSignatureType() {
     const type = document.querySelector('input[name="sigType"]:checked').value;
@@ -132,10 +132,12 @@ function toggleSignatureType() {
 
     document.getElementById('signature-social').style.display =
         type === 'social' ? 'block' : 'none';
-
+ /*
     activeSignatureId = type === 'social'
         ? 'signature-social'
         : 'signature-default';
+ */
+    activeSignatureId = 'signature-social'; // SEMPRE SOCIAL
 }
 
 function updateSignature() {
@@ -186,6 +188,7 @@ function copySignature() {
 
 </body>
 </html>
+
 
 
 
