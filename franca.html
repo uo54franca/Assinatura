@@ -114,8 +114,10 @@ let activeSignatureId = 'signature-default';
 
 function toggleSignatureType() {
     const type = document.querySelector('input[name="sigType"]:checked').value;
+
     document.getElementById('signature-default').style.display =
         type === 'default' ? 'block' : 'none';
+
     document.getElementById('signature-social').style.display =
         type === 'social' ? 'block' : 'none';
 
@@ -129,9 +131,17 @@ function updateSignature() {
     const sector = document.getElementById('sector').value || 'Setor | Unidade';
     const phone = document.getElementById('phone').value || '+55 00 00000000';
 
-    document.querySelectorAll('.sig-name').forEachforEach(el => el.innerText = name);
-    document.querySelectorAll('.sig-sector').forEach(el => el.innerText = sector);
-    document.querySelectorAll('.sig-phone').forEach(el => el.innerText = phone);
+    document.querySelectorAll('.sig-name').forEach(el => {
+        el.innerText = name;
+    });
+
+    document.querySelectorAll('.sig-sector').forEach(el => {
+        el.innerText = sector;
+    });
+
+    document.querySelectorAll('.sig-phone').forEach(el => {
+        el.innerText = phone;
+    });
 }
 
 function copySignature() {
@@ -148,7 +158,7 @@ function copySignature() {
         const msg = document.getElementById('msgSuccess');
         msg.style.display = 'block';
         setTimeout(() => msg.style.display = 'none', 4000);
-    } catch {
+    } catch (err) {
         alert('Erro ao copiar. Copie manualmente (Ctrl+C).');
     }
 
@@ -156,7 +166,9 @@ function copySignature() {
 }
 </script>
 
+
 </body>
 </html>
+
 
 
