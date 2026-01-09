@@ -57,7 +57,10 @@
 
         <label for="phone">Telefone:</label>
         <input type="text" id="phone" placeholder="Ex: +55 16 3112 7604" oninput="updateSignature()">
-        
+
+        <label for="site">Site:</label>
+        <input type="text" id="site" value="sescsp.org.br" oninput="updateSignature()">
+
         <button onclick="copySignature()">Copiar Assinatura</button>
         <p class="copy-success" id="msgSuccess">Copiado! Agora cole nas configurações do seu e-mail.</p>
     </div>
@@ -70,12 +73,13 @@
             <table border="0" cellpadding="0" cellspacing="0" style="font-family: Arial, Helvetica, sans-serif; color: #333333; line-height: 1.3;">
                 <tr>
                     <td style="padding-right: 25px; vertical-align: middle;">
-                        <img src="https://raw.githubusercontent.com/uo54franca/Assinatura/main/assinatura_email_80_anos_JPG.jpg" alt="Sesc Senac Fecomercio" width="200" style="display: block; border: 0; max-width: 200px; height: auto;">
+                        <img src="https://raw.githubusercontent.com/lucianosouza995/Imagens/main/assinatura_email_80_anos_JPG.jpg" alt="Sesc Senac Fecomercio" width="200" style="display: block; border: 0; max-width: 200px; height: auto;">
                     </td>
                     <td style="border-left: 1px solid #333333; padding-left: 15px; vertical-align: middle;">
                         <strong style="font-size: 14px; color: #000000;" class="sig-name">Thomas Henrique</strong><br>
                         <span style="font-size: 13px; color: #333333;" class="sig-sector">NTI</span><br>
                         <span style="font-size: 13px; color: #333333;">Tel.: <span class="sig-phone">+55 16 3112 7604</span></span><br>
+                        <a href="https://sescsp.org.br" class="sig-site-link" style="font-size: 13px; color: #000000; text-decoration: underline;">sescsp.org.br</a>
                     </td>
                 </tr>
             </table>
@@ -91,7 +95,7 @@
                         <strong style="font-size: 14px; color: #000000;" class="sig-name">Thomas Henrique</strong><br>
                         <span style="font-size: 13px; color: #333333;" class="sig-sector">NTI</span><br>
                         <span style="font-size: 13px; color: #333333;">Tel.: <span class="sig-phone">+55 16 3112 7604</span></span><br>
-                        <a href="https://sescsp.org.br/franca" class="sig-site-link" style="font-size: 13px; color: #000000; text-decoration: underline;">sescsp.org.br/franca</a><br>
+                        <a href="https://sescsp.org.br" class="sig-site-link" style="font-size: 13px; color: #000000; text-decoration: underline;">sescsp.org.br</a><br>
                         
                         <div style="padding-top: 10px;">
                             <a href="http://www.facebook.com/sescfrancasp" target="_blank" style="text-decoration: none; margin-right: 8px;">
@@ -135,8 +139,8 @@
         // Pega os valores dos campos
         const name = document.getElementById('name').value || 'Seu Nome Aqui';
         const sector = document.getElementById('sector').value || 'Setor | Unidade';
-        const phone = document.getElementById('phone').value || '+55 16 3112-0000';
-        const site = document.getElementById('site').value || 'sescsp.org.br/franca';
+        const phone = document.getElementById('phone').value || '+55 00 00000000';
+        const site = document.getElementById('site').value || 'sescsp.org.br';
 
         // Atualiza TODOS os elementos com as classes comuns nas duas assinaturas
         document.querySelectorAll('.sig-name').forEach(el => el.innerText = name);
@@ -178,5 +182,3 @@
 
 </body>
 </html>
-
-
