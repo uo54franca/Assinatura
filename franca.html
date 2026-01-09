@@ -27,12 +27,13 @@
 
         .signature-container { margin-top: 20px; padding: 15px; border: 1px dashed #ccc; background: #fff; }
         /* Esconde a segunda assinatura por padrão */
-        #signature-social { display: none; }
+       /* #signature-social { display: none; } */
     </style>
 </head>
 <body>
-
-<div class="container">
+    
+<!--
+ <div class="container">
     <div class="form-area">
         <h2>1. Escolha o Modelo</h2>
         <div class="type-selector">
@@ -46,7 +47,7 @@
                 </label>
             </div>
         </div>
-
+    
         <h2>2. Preencha seus dados</h2>
         
         <label for="name">Nome Completo:</label>
@@ -81,7 +82,7 @@
                 </tr>
             </table>
         </div>
-
+-->
         <div id="signature-social" class="signature-container">
             <table border="0" cellpadding="0" cellspacing="0" style="font-family: Arial, Helvetica, sans-serif; color: #333333; line-height: 1.3;">
                 <tr>
@@ -111,7 +112,7 @@
 
 <script>
 let activeSignatureId = 'signature-default';
-
+/*
 function toggleSignatureType() {
     const type = document.querySelector('input[name="sigType"]:checked').value;
 
@@ -125,7 +126,7 @@ function toggleSignatureType() {
         ? 'signature-social'
         : 'signature-default';
 }
-
+*/
 function updateSignature() {
     const name = document.getElementById('name').value || 'Seu Nome Aqui';
     const sector = document.getElementById('sector').value || 'Setor | Unidade';
@@ -174,6 +175,7 @@ function copySignature() {
 
 </body>
 </html>
+
 
 
 
