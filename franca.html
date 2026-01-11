@@ -80,7 +80,7 @@ input[value="default"] + label {
         <label for="name">Nome Completo:</label>
         <input type="text" id="name" placeholder="Ex: Thomas Henrique" oninput="updateSignature()">
 
-        <label for="sectorEnd">Setor :</label>
+        <label for="sectorEnd">Setor:</label>
         <input type="text" id="sectorEnd" placeholder="Ex: NTI | Sesc Franca" oninput="updateSignature()">
 
         <label for="phoneEnd">Últimos 4 dígitos do telefone:</label>
@@ -160,7 +160,7 @@ function updateSignature() {
     const name = document.getElementById('name').value || 'Seu Nome Aqui';
     
     // Parte digitada do setor
-    const sectorEnd = document.getElementById('sectorEnd').value || 'Setor | Unidade';
+    const sectorEnd = document.getElementById('sectorEnd').value || 'Setor ';
 
     // Setor final (igual ao conceito do telefone)
     const sector = `${sectorEnd} | Sesc Franca`;
@@ -209,6 +209,7 @@ function copySignature() {
 
 </body>
 </html>
+
 
 
 
